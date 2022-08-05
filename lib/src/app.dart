@@ -1,8 +1,9 @@
+import 'package:alpha/src/pages/pages.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:alpha/generated/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'pages/home_page/home_page.dart';
+import 'themes/color_schemes.g.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({
@@ -10,32 +11,48 @@ class MyApp extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return MaterialApp(
-      
       restorationScopeId: 'app',
-      
+      scrollBehavior: MouseScrollBehavior(),
       localizationsDelegates: const [
-        AppLocalizations.delegate,
+        L10n.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en', ''), // English, no country code
-      ],
-
-      onGenerateTitle: (BuildContext context) =>
-          AppLocalizations.of(context)!.appTitle,
-          
-      theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
-      
-      onGenerateRoute: (RouteSettings routeSettings) {
+      supportedLocales: <Locale>[...L10n.delegate.supportedLocales],
+      onGenerateTitle: (final BuildContext context) => L10n.of(context).appTitle,
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: lightColorScheme,
+        iconTheme: IconThemeData(
+          color: lightColorScheme.primary,
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: darkColorScheme,
+        iconTheme: IconThemeData(
+          color: darkColorScheme.primary,
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: (final RouteSettings routeSettings) {
         return MaterialPageRoute<void>(
           settings: routeSettings,
-          builder: (BuildContext context) {
+          builder: (final BuildContext context) {
             switch (routeSettings.name) {
+              case AmharicPage.routeName:
+                return const AmharicPage();
+              case ArabicPage.routeName:
+                return const ArabicPage();
+              case EnglishPage.routeName:
+                return const EnglishPage();
+              case SettingsPage.routeName:
+                return const SettingsPage();
               case HomePage.routeName:
               default:
                 return const HomePage();
@@ -45,4 +62,13 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+}
+
+class MouseScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => <PointerDeviceKind>{
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad,
+      };
 }
