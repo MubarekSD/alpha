@@ -10,23 +10,47 @@ environment:
   sdk: '>=2.18.0-271.0.dev <3.0.0'
 
 dependencies:
+  audioplayers: ^1.0.1
+  carousel_slider: ^4.1.1
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  intl: ^0.17.0
+  json_annotation: ^4.6.0
 
 dev_dependencies:
+  # flutter pub run apn_json2model
+  apn_json2model: ^2.3.0
+  build_runner: ^2.2.0
+  flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+  # flutter pub run intl_utils:generate
+  intl_utils: ^2.7.0
+  json_serializable: ^6.3.1
+  lint: ^1.10.0
 
-  flutter_lints: ^2.0.0
+
+flutter_intl:
+  enabled: true
+  class_name: L10n
 
 flutter:
   uses-material-design: true
 
-  # Enable generation of localized Strings from arb files.
-  generate: true
-
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
+    - assets/images/categories/
+    - assets/audio/am/numbers/
+    - assets/audio/ar/numbers/
+    - assets/audio/en/numbers/
+
+  fonts:
+    - family: Comic-Regular
+      fonts:
+        - asset: assets/fonts/Comic-Regular.ttf
+    - family: Comic-Bold
+      fonts:
+        - asset: assets/fonts/Comic-Bold.ttf
